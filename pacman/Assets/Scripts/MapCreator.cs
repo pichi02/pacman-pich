@@ -5,7 +5,9 @@ using System.IO;
 
 public class MapCreator : MonoBehaviour
 {
-    [SerializeField] private GameObject prefab;
+    [SerializeField] private GameObject brickPrefab;
+    [SerializeField] private GameObject pointPrefab;
+    [SerializeField] private GameObject pillPrefab;
 
     private int posX = 0;
     private int posY = 0;
@@ -18,12 +20,6 @@ public class MapCreator : MonoBehaviour
     {
         ReadFileMap();
         CreateMap();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void ReadFileMap()
@@ -42,6 +38,7 @@ public class MapCreator : MonoBehaviour
 
     public void CreateMap()
     {
+        Vector2 v;
         for (int i = 0; i < mapLines.Length - 1; i++)
         {
             for (int j = 0; j < mapLines[i].Length - 1; j++)
@@ -50,8 +47,16 @@ public class MapCreator : MonoBehaviour
                 {
 
                     case 'X':
-                        Vector2 v = new Vector2(j, i);
-                        Instantiate(prefab, v, Quaternion.identity);
+                        v = new Vector2(j, i);
+                        Instantiate(brickPrefab, v, Quaternion.identity);
+                        break;
+                    case 'O':
+                        v = new Vector2(j, i);
+                        Instantiate(pointPrefab, v, Quaternion.identity);
+                        break;
+                    case '*':
+                        v = new Vector2(j, i);
+                        Instantiate(pillPrefab, v, Quaternion.identity);
                         break;
                     default:
                         break;
