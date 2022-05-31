@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private Text scoreText;
 
     Rigidbody2D rb;
-    bool movingUp = false;
-    bool movingDown = false;
-    bool movingRight = false;
-    bool movingLeft = false;
+    private bool movingUp = false;
+    private bool movingDown = false;
+    private bool movingRight = false;
+    private bool movingLeft = false;
+
+    private int score = 0;
 
     private void Awake()
     {
@@ -21,8 +25,9 @@ public class Player : MonoBehaviour
     void Update()
     {
         Move();
+        UpdateScore();
     }
-    public void Move()
+    private void Move()
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || movingUp)
         {
@@ -56,5 +61,9 @@ public class Player : MonoBehaviour
             movingUp = false;
             movingLeft = false;
         }
+    }
+    private void UpdateScore()
+    {
+        scoreText.text = "Score: " + score;
     }
 }
