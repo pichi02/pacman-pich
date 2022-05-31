@@ -26,7 +26,10 @@ public class Player : MonoBehaviour
     {
         Move();
         UpdateScore();
+        Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z));
     }
+
+
     private void Move()
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || movingUp)
@@ -36,6 +39,7 @@ public class Player : MonoBehaviour
             movingDown = false;
             movingRight = false;
             movingLeft = false;
+
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || movingDown)
         {
@@ -44,6 +48,7 @@ public class Player : MonoBehaviour
             movingUp = false;
             movingRight = false;
             movingLeft = false;
+
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) || movingLeft)
         {
@@ -52,15 +57,26 @@ public class Player : MonoBehaviour
             movingDown = false;
             movingRight = false;
             movingUp = false;
+
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || movingRight)
         {
+            RaycastHit2D collisionInfo = Physics2D.BoxCast(transform.position, new Vector2(1, 1), 0, new Vector2(0f, 0f));
+
+            if (collisionInfo.transform.gameObject.CompareTag("Brick"))
+            {
+                //Debug.Log("pared");
+            }
+
+
             rb.MovePosition(transform.position + Vector3.right * speed);
             movingRight = true;
             movingDown = false;
             movingUp = false;
             movingLeft = false;
+
         }
+
     }
     private void UpdateScore()
     {
@@ -77,6 +93,12 @@ public class Player : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+
+
+    }
+    private void OnDrawGizmos()
+    {
+
     }
 
 }
