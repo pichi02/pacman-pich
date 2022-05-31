@@ -66,4 +66,13 @@ public class Player : MonoBehaviour
     {
         scoreText.text = "Score: " + score;
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Point"))
+        {
+            Destroy(collision.gameObject);
+            score += 10;
+        }
+    }
+
 }
