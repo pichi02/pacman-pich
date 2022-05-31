@@ -73,6 +73,10 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             score += 10;
         }
+        else if (collision.gameObject.CompareTag("Pill"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
 }
