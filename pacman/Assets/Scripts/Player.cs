@@ -7,8 +7,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private Text scoreText;
+    public Movement movement { get; private set; }
 
-    Rigidbody2D rb;
     private bool movingUp = false;
     private bool movingDown = false;
     private bool movingRight = false;
@@ -18,10 +18,10 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+      
+        movement = GetComponent<Movement>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         Move();
@@ -32,50 +32,24 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || movingUp)
+      
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            rb.MovePosition(transform.position + Vector3.up * speed);
-            movingUp = true;
-            movingDown = false;
-            movingRight = false;
-            movingLeft = false;
-
+            movement.SetDirection(Vector2.up);
         }
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || movingDown)
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            rb.MovePosition(transform.position + Vector3.down * speed);
-            movingDown = true;
-            movingUp = false;
-            movingRight = false;
-            movingLeft = false;
-
+            movement.SetDirection(Vector2.down);
         }
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) || movingLeft)
+        else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            rb.MovePosition(transform.position + Vector3.left * speed);
-            movingLeft = true;
-            movingDown = false;
-            movingRight = false;
-            movingUp = false;
-
+            movement.SetDirection(Vector2.left);
         }
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || movingRight)
+        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            RaycastHit2D collisionInfo = Physics2D.BoxCast(transform.position, new Vector2(1, 1), 0, new Vector2(0f, 0f));
-
-            if (collisionInfo.transform.gameObject.CompareTag("Brick"))
-            {
-                //Debug.Log("pared");
-            }
-
-
-            rb.MovePosition(transform.position + Vector3.right * speed);
-            movingRight = true;
-            movingDown = false;
-            movingUp = false;
-            movingLeft = false;
-
+            movement.SetDirection(Vector2.right);
         }
+
 
     }
     private void UpdateScore()
@@ -96,9 +70,6 @@ public class Player : MonoBehaviour
 
 
     }
-    private void OnDrawGizmos()
-    {
-
-    }
+ 
 
 }

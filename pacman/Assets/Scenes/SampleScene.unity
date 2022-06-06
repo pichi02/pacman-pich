@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 868680067}
   - component: {fileID: 868680066}
   - component: {fileID: 868680065}
+  - component: {fileID: 868680070}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -306,6 +307,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!50 &868680070
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868680064}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1025439588
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +385,7 @@ GameObject:
   - component: {fileID: 1178110678}
   - component: {fileID: 1178110677}
   - component: {fileID: 1178110676}
+  - component: {fileID: 1178110680}
   - component: {fileID: 1178110675}
   - component: {fileID: 1178110679}
   m_Layer: 0
@@ -488,6 +511,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &1178110680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178110674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44a263c81f247ba41be8f4fcec1d1e3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 6
+  speedMultiplier: 1
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1524001748
 GameObject:
   m_ObjectHideFlags: 0

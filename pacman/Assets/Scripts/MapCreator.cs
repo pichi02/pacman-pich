@@ -15,7 +15,6 @@ public class MapCreator : MonoBehaviour
     private string map;
 
     private string[] mapLines;
-    // Start is called before the first frame update
     void Start()
     {
         ReadFileMap();
