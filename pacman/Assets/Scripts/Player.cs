@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-      
+
         movement = GetComponent<Movement>();
     }
 
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-      
+
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             movement.SetDirection(Vector2.up);
@@ -67,9 +67,21 @@ public class Player : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+        //else if (collision.gameObject.CompareTag("Portal"))
+        //{
+        //    if (transform.position.x > 26)
+        //    {
+        //        transform.position = new Vector2(2, transform.position.y);
+        //    }
+        //    else if (transform.position.x < 2)
+        //    {
+        //        transform.position = new Vector2(26, transform.position.y);
+        //    }
+
+        //}
 
 
     }
- 
+
 
 }

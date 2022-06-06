@@ -8,6 +8,7 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private GameObject brickPrefab;
     [SerializeField] private GameObject pointPrefab;
     [SerializeField] private GameObject pillPrefab;
+    [SerializeField] private GameObject portalPrefab;
 
     private int posX = 0;
     private int posY = 0;

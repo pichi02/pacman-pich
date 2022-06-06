@@ -7,6 +7,7 @@ TagManager:
   - Point
   - Pill
   - Brick
+  - Portal
   layers:
   - Default
   - TransparentFX
