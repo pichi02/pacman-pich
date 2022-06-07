@@ -21,7 +21,7 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
-        ResetState();
+        //ResetState();
     }
 
     public void ResetState()
@@ -36,7 +36,7 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        
+
         if (nextDirection != Vector2.zero)
         {
             SetDirection(nextDirection);
@@ -53,7 +53,7 @@ public class Movement : MonoBehaviour
 
     public void SetDirection(Vector2 direction)
     {
- 
+
         if (!Occupied(direction))
         {
             this.direction = direction;
@@ -67,9 +67,14 @@ public class Movement : MonoBehaviour
 
     public bool Occupied(Vector2 direction)
     {
-        
+
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, Vector2.one * 0.75f, 0f, direction, 1.5f, obstacleLayer);
         return hit.collider != null;
+    }
+    public Vector2 GetDirection()
+    {
+        return this.direction;
+
     }
 
 }

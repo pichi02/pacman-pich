@@ -7,18 +7,13 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private Text scoreText;
-    public Movement movement { get; private set; }
+    public Movement movement;
 
-    private bool movingUp = false;
-    private bool movingDown = false;
-    private bool movingRight = false;
-    private bool movingLeft = false;
-
+  
     private int score = 0;
 
     private void Awake()
     {
-
         movement = GetComponent<Movement>();
     }
 
@@ -26,7 +21,6 @@ public class Player : MonoBehaviour
     {
         Move();
         UpdateScore();
-        Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z));
     }
 
 
