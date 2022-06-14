@@ -26,18 +26,18 @@ public class Home : GhostModes
         if (enabled && collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             ghost.movement.SetDirection(-ghost.movement.direction);
-            Debug.Log(ghost.movement.direction);
+            
         }
 
     }
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (enabled && collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
-    //    {
-    //        ghost.movement.SetDirection(-ghost.movement.direction);
-    //        Debug.Log(ghost.movement.direction);
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (enabled && collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        {
+            ghost.movement.SetDirection(-ghost.movement.direction);
+          
+        }
+    }
 
     private IEnumerator ExitHome()
     {

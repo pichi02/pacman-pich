@@ -9,6 +9,7 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private GameObject pointPrefab;
     [SerializeField] private GameObject pillPrefab;
     [SerializeField] private GameObject portalPrefab;
+    [SerializeField] private GameObject homeDoor;
 
     private int posX = 0;
     private int posY = 0;
@@ -61,6 +62,10 @@ public class MapCreator : MonoBehaviour
                     case '*':
                         v = new Vector2(j + 0.5f, i + 0.5f);
                         Instantiate(pillPrefab, v, Quaternion.identity);
+                        break;
+                    case '-':
+                        v = new Vector2(j + 0.5f, i + 0.5f);
+                        Instantiate(homeDoor, v, Quaternion.identity);
                         break;
                     default:
                         break;

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Frightened : GhostModes
 {
-    
 
+    public delegate void GhostEaten();
+    public GhostEaten OnGhostEat;
     public bool eaten { get; private set; }
 
     public override void Enable(float duration)
@@ -20,7 +21,7 @@ public class Frightened : GhostModes
     {
         base.Disable();
 
-        
+
     }
 
     private void Eaten()
@@ -29,20 +30,19 @@ public class Frightened : GhostModes
         ghost.SetPosition(ghost.home.GetInside().position);
         ghost.frightened.Disable();
         ghost.home.Enable(duration);
-       
+
     }
 
     private void Flash()
     {
         if (!eaten)
         {
-           
+
         }
     }
 
     private void OnEnable()
     {
-        
         ghost.movement.speedMultiplier = 0.5f;
         eaten = false;
         ghost.ChangeColor(Color.blue);
@@ -54,7 +54,7 @@ public class Frightened : GhostModes
     {
         ghost.movement.speedMultiplier = 1f;
         eaten = false;
-        ghost.ChangeColor(Color.red);
+        ghost.ChangeColor(ghost.GetInitialColor());
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -99,6 +99,7 @@ public class Frightened : GhostModes
             if (enabled)
             {
                 Eaten();
+                OnGhostEat?.Invoke();
             }
         }
     }

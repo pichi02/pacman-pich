@@ -12,18 +12,25 @@ public class Player : MonoBehaviour
     public delegate void PillEaten();
     public event PillEaten OnPillEat;
 
+    public delegate void GameOver();
+    public GameOver OnGameOver;
+
+    private Vector2 initialPosition;
 
     private int score = 0;
+    private int lives = 3;
 
     private void Awake()
     {
         movement = GetComponent<Movement>();
+        initialPosition = transform.position;
     }
 
     void Update()
     {
         Move();
         UpdateScore();
+        CheckGameOver();
     }
 
 
@@ -58,8 +65,14 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Point"))
         {
+            Point point = collision.gameObject.GetComponent<Point>();
+            if (point.GetInstantiatedPoints() == 1)
+            {
+                Debug.Log("ganaste");
+            }
             Destroy(collision.gameObject);
             score += 10;
+
         }
         else if (collision.gameObject.CompareTag("Pill"))
         {
@@ -69,6 +82,28 @@ public class Player : MonoBehaviour
 
 
 
+    }
+    public void IncreaseScore()
+    {
+        score += 50;
+    }
+    public void SubstractLive()
+    {
+        lives--;
+        Debug.Log(lives);
+    }
+
+    public void ResetPacman()
+    {
+        transform.position = initialPosition;
+    }
+    public void CheckGameOver()
+    {
+        if (lives <= 0)
+        {
+            OnGameOver?.Invoke();
+            Time.timeScale = 0;
+        }
     }
 
 

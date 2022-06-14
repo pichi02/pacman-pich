@@ -14,7 +14,12 @@ public class Ghost : MonoBehaviour
     public int points = 200;
     [SerializeField]
     private SpriteRenderer sr;
+    private Color initialColor;
 
+    public delegate void PacmanKilled();
+    public static PacmanKilled OnPacmanKill;
+
+    
     private void Awake()
     {
         movement = GetComponent<Movement>();
@@ -23,6 +28,7 @@ public class Ghost : MonoBehaviour
         chase = GetComponent<Chase>();
         frightened = GetComponent<Frightened>();
         sr = GetComponent<SpriteRenderer>();
+        initialColor = sr.color;
     }
 
     private void Start()
@@ -61,12 +67,19 @@ public class Ghost : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Pacman"))
         {
-
+            if (!frightened.enabled)
+            {
+                OnPacmanKill?.Invoke();
+            }
         }
     }
     public void ChangeColor(Color color)
     {
         sr.color = color;
+    }
+    public Color GetInitialColor()
+    {
+        return initialColor;
     }
 
 }
