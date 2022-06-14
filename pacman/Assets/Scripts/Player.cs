@@ -7,9 +7,12 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private Text scoreText;
-    public Movement movement;
+    private Movement movement;
 
-  
+    public delegate void PillEaten();
+    public event PillEaten OnPillEat;
+
+
     private int score = 0;
 
     private void Awake()
@@ -44,7 +47,8 @@ public class Player : MonoBehaviour
             movement.SetDirection(Vector2.right);
         }
 
-
+        float angle = Mathf.Atan2(movement.direction.y, movement.direction.x);
+        transform.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.forward);
     }
     private void UpdateScore()
     {
@@ -59,20 +63,10 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Pill"))
         {
+            OnPillEat?.Invoke();
             Destroy(collision.gameObject);
         }
-        //else if (collision.gameObject.CompareTag("Portal"))
-        //{
-        //    if (transform.position.x > 26)
-        //    {
-        //        transform.position = new Vector2(2, transform.position.y);
-        //    }
-        //    else if (transform.position.x < 2)
-        //    {
-        //        transform.position = new Vector2(26, transform.position.y);
-        //    }
 
-        //}
 
 
     }
