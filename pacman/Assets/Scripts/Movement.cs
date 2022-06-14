@@ -4,12 +4,12 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float speed = 8f;
-    [SerializeField] private float speedMultiplier = 1f;
-    private Vector2 initialDirection;
+    public float speedMultiplier = 1f;
+    [SerializeField] private Vector2 initialDirection;
     [SerializeField] private LayerMask obstacleLayer;
 
     private Rigidbody2D rigidbody;
-    private Vector2 direction;
+    public Vector2 direction;
     private Vector2 nextDirection;
     private Vector3 startingPosition;
 
@@ -51,10 +51,10 @@ public class Movement : MonoBehaviour
         rigidbody.MovePosition(position + translation);
     }
 
-    public void SetDirection(Vector2 direction)
+    public void SetDirection(Vector2 direction, bool forced = false)
     {
 
-        if (!Occupied(direction))
+        if (!Occupied(direction) || forced)
         {
             this.direction = direction;
             nextDirection = Vector2.zero;
@@ -74,7 +74,10 @@ public class Movement : MonoBehaviour
     public Vector2 GetDirection()
     {
         return this.direction;
-
+    }
+    public void ChangeKinematicRBValue(bool value)
+    {
+        rigidbody.isKinematic = value;
     }
 
 }

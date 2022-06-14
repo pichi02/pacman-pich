@@ -16,10 +16,14 @@ public class MapCreator : MonoBehaviour
     private string map;
 
     private string[] mapLines;
-    void Start()
+    private void Awake()
     {
         ReadFileMap();
         CreateMap();
+    }
+    void Start()
+    {
+       
     }
 
     public void ReadFileMap()
@@ -47,15 +51,15 @@ public class MapCreator : MonoBehaviour
                 {
 
                     case 'X':
-                        v = new Vector2(j, i);
+                        v = new Vector2(j + 0.5f, i + 0.5f);
                         Instantiate(brickPrefab, v, Quaternion.identity);
                         break;
                     case 'O':
-                        v = new Vector2(j, i);
+                        v = new Vector2(j + 0.5f, i + 0.5f);
                         Instantiate(pointPrefab, v, Quaternion.identity);
                         break;
                     case '*':
-                        v = new Vector2(j, i);
+                        v = new Vector2(j + 0.5f, i + 0.5f);
                         Instantiate(pillPrefab, v, Quaternion.identity);
                         break;
                     default:

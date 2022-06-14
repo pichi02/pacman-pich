@@ -4,90 +4,69 @@ using UnityEngine;
 
 public class Ghost : MonoBehaviour
 {
-    Movement movement;
+    public Movement movement;
+    public Home home { get; private set; }
+    public Scatter scatter { get; private set; }
+    public Chase chase { get; private set; }
+    public Frightened frightened { get; private set; }
+    public GhostModes initialBehavior;
+    public Transform target;
+    public int points = 200;
+    [SerializeField]
+    private SpriteRenderer sr;
+
     private void Awake()
     {
         movement = GetComponent<Movement>();
-
+        home = GetComponent<Home>();
+        scatter = GetComponent<Scatter>();
+        chase = GetComponent<Chase>();
+        frightened = GetComponent<Frightened>();
+        sr = GetComponent<SpriteRenderer>();
     }
+
     private void Start()
     {
-        movement.SetDirection(Vector2.right);
+        ResetState();
     }
-    void Update()
+
+    public void ResetState()
+    {
+        gameObject.SetActive(true);
+        movement.ResetState();
+
+        frightened.Disable();
+        chase.Disable();
+        scatter.Enable();
+
+        if (home != initialBehavior)
+        {
+            home.Disable();
+        }
+
+        if (initialBehavior != null)
+        {
+            initialBehavior.Enable();
+        }
+    }
+
+    public void SetPosition(Vector3 position)
     {
 
-        int rand = Random.Range(0, 4);
-
-        Debug.Log(movement.GetDirection());
-        if (movement.GetDirection() == Vector2.up)
-        {
-            Debug.Log("entra");
-            rand = Random.RandomRange(0, 3);
-            if (rand == 0)
-            {
-                movement.SetDirection(Vector2.right);
-            }
-            else if (rand == 1)
-            {
-                movement.SetDirection(Vector2.left);
-            }
-            else
-            {
-                movement.SetDirection(Vector2.up);
-            }
-        }
-        else if (movement.GetDirection() == Vector2.down)
-        {
-            Debug.Log("entra");
-            rand = Random.RandomRange(0, 3);
-            if (rand == 0)
-            {
-                movement.SetDirection(Vector2.right);
-            }
-            else if (rand == 1)
-            {
-                movement.SetDirection(Vector2.left);
-            }
-            else
-            {
-                movement.SetDirection(Vector2.down);
-            }
-        }
-        else if (movement.GetDirection() == Vector2.right)
-        {
-            Debug.Log("entra");
-            rand = Random.RandomRange(0, 3);
-            if (rand == 0)
-            {
-                movement.SetDirection(Vector2.right);
-            }
-            else if (rand == 1)
-            {
-                movement.SetDirection(Vector2.up);
-            }
-            else
-            {
-                movement.SetDirection(Vector2.down);
-            }
-        }
-        else if (movement.GetDirection() == Vector2.left)
-        {
-            Debug.Log("entra");
-            rand = Random.RandomRange(0, 3);
-            if (rand == 0)
-            {
-                movement.SetDirection(Vector2.left);
-            }
-            else if (rand == 1)
-            {
-                movement.SetDirection(Vector2.up);
-            }
-            else
-            {
-                movement.SetDirection(Vector2.down);
-            }
-        }
-
+        position.z = transform.position.z;
+        transform.position = position;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Pacman"))
+        {
+
+        }
+    }
+    public void ChangeColor(Color color)
+    {
+        sr.color = color;
+    }
+
 }
