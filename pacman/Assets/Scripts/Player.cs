@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private Text scoreText;
+    [SerializeField] private Text livesText;
     private Movement movement;
 
     public delegate void PillEaten();
@@ -15,22 +16,32 @@ public class Player : MonoBehaviour
     public delegate void GameOver();
     public GameOver OnGameOver;
 
+    public delegate void Win();
+    public event Win OnWin;
+
     private Vector2 initialPosition;
 
     private int score = 0;
-    private int lives = 3;
+    private int lives = 1;
+
+    private bool allPointsCollected = false;
+    private bool allPillsCollected = false;
 
     private void Awake()
     {
         movement = GetComponent<Movement>();
         initialPosition = transform.position;
+        Time.timeScale = 1;
     }
 
     void Update()
     {
         Move();
         UpdateScore();
+        UpdateLives();
         CheckGameOver();
+        CheckWin();
+
     }
 
 
@@ -61,6 +72,10 @@ public class Player : MonoBehaviour
     {
         scoreText.text = "Score: " + score;
     }
+    private void UpdateLives()
+    {
+        livesText.text = "Lives: " + lives;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Point"))
@@ -68,7 +83,7 @@ public class Player : MonoBehaviour
             Point point = collision.gameObject.GetComponent<Point>();
             if (point.GetInstantiatedPoints() == 1)
             {
-                Debug.Log("ganaste");
+                allPointsCollected = true;
             }
             Destroy(collision.gameObject);
             score += 10;
@@ -76,6 +91,11 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Pill"))
         {
+            Pill pill = collision.gameObject.GetComponent<Pill>();
+            if (pill.GetInstantiatedPills() == 1)
+            {
+                allPillsCollected = true;
+            }
             OnPillEat?.Invoke();
             Destroy(collision.gameObject);
         }
@@ -102,6 +122,14 @@ public class Player : MonoBehaviour
         if (lives <= 0)
         {
             OnGameOver?.Invoke();
+            Time.timeScale = 0;
+        }
+    }
+    public void CheckWin()
+    {
+        if (allPillsCollected && allPointsCollected)
+        {
+            OnWin?.Invoke();
             Time.timeScale = 0;
         }
     }

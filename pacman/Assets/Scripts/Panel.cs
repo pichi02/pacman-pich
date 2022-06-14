@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOverPanel : MonoBehaviour
+public class Panel : MonoBehaviour
 {
 
     public void Active()

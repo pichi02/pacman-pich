@@ -14,6 +14,7 @@ public abstract class GhostModes : MonoBehaviour
 
     public void Enable()
     {
+
         Enable(duration);
        
     }

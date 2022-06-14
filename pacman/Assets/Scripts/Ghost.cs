@@ -19,7 +19,7 @@ public class Ghost : MonoBehaviour
     public delegate void PacmanKilled();
     public static PacmanKilled OnPacmanKill;
 
-    
+
     private void Awake()
     {
         movement = GetComponent<Movement>();
@@ -38,7 +38,9 @@ public class Ghost : MonoBehaviour
 
     public void ResetState()
     {
-        gameObject.SetActive(true);
+   
+        //gameObject.SetActive(true);
+        
         movement.ResetState();
 
         frightened.Disable();

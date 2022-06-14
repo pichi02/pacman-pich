@@ -43,7 +43,7 @@ public class Home : GhostModes
     {
 
         ghost.movement.SetDirection(Vector2.up, true);
-        ghost.movement.ChangeKinematicRBValue(true);
+        //ghost.movement.ChangeKinematicRBValue(true);
         ghost.movement.enabled = false;
 
         Vector3 position = transform.position;
@@ -70,7 +70,7 @@ public class Home : GhostModes
 
 
         ghost.movement.SetDirection(new Vector2(Random.value < 0.5f ? -1f : 1f, 0f), true);
-        ghost.movement.ChangeKinematicRBValue(false);
+        //ghost.movement.ChangeKinematicRBValue(false);
         ghost.movement.enabled = true;
     }
     public Transform GetInside()
