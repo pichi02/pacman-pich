@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     private Vector2 initialPosition;
 
     private int score = 0;
-    private int lives = 1;
+    private int lives = 3;
 
     private bool allPointsCollected = false;
     private bool allPillsCollected = false;
