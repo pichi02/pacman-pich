@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private Text scoreText;
-    [SerializeField] private Text livesText;
+
+    [SerializeField] private GameObject[] hearts;
     private Movement movement;
 
     public delegate void PillEaten();
@@ -38,7 +39,6 @@ public class Player : MonoBehaviour
     {
         Move();
         UpdateScore();
-        UpdateLives();
         CheckGameOver();
         CheckWin();
 
@@ -65,17 +65,12 @@ public class Player : MonoBehaviour
             movement.SetDirection(Vector2.right);
         }
 
-        float angle = Mathf.Atan2(movement.direction.y, movement.direction.x);
-        transform.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.forward);
     }
     private void UpdateScore()
     {
         scoreText.text = "Score: " + score;
     }
-    private void UpdateLives()
-    {
-        livesText.text = "Lives: " + lives;
-    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Point"))
@@ -110,7 +105,18 @@ public class Player : MonoBehaviour
     public void SubstractLive()
     {
         lives--;
-        Debug.Log(lives);
+        if (lives == 2)
+        {
+            Destroy(hearts[2]);
+        }
+        else if (lives == 1)
+        {
+            Destroy(hearts[1]);
+        }
+        else if (lives == 0)
+        {
+            Destroy(hearts[0]);
+        }
     }
 
     public void ResetPacman()
