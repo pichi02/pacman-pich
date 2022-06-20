@@ -5,8 +5,12 @@ using UnityEngine;
 public class Panel : MonoBehaviour
 {
 
-    public void Active()
+    public void Activate()
     {
         gameObject.SetActive(true);
+    }
+    public void Dectivate()
+    {
+        gameObject.SetActive(false);
     }
 }

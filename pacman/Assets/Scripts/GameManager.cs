@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour
         }
         Ghost.OnPacmanKill += pacman.SubstractLive;
         Ghost.OnPacmanKill += pacman.ResetPacman;
-        pacman.OnGameOver += gameOverPanel.Active;
-        pacman.OnWin += winPanel.Active;
+        pacman.OnGameOver += gameOverPanel.Activate;
+        pacman.OnWin += winPanel.Activate;
     }
 
     // Update is called once per frame
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         }
         Ghost.OnPacmanKill -= pacman.SubstractLive;
         Ghost.OnPacmanKill -= pacman.ResetPacman;
-        pacman.OnGameOver -= gameOverPanel.Active;
-        pacman.OnWin -= winPanel.Active;
+        pacman.OnGameOver -= gameOverPanel.Activate;
+        pacman.OnWin -= winPanel.Activate;
     }
 }
