@@ -11,25 +11,37 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private GameObject portalPrefab;
     [SerializeField] private GameObject homeDoor;
 
+    [SerializeField] TextAsset mapAsset;
+
     private int posX = 0;
     private int posY = 0;
 
     private string map;
 
+    string path;
+
     private string[] mapLines;
     private void Awake()
     {
+        path = Application.persistentDataPath + "/maps";
+        CreateFileMap();
         ReadFileMap();
-        CreateMap();
     }
     void Start()
     {
-       
+        CreateMap();
+        Debug.Log(Application.persistentDataPath);
+    }
+
+    public void CreateFileMap()
+    {
+        Directory.CreateDirectory(path);
+        File.WriteAllText(path, mapAsset.ToString());
     }
 
     public void ReadFileMap()
     {
-        FileStream fs = File.OpenRead("Assets/Map/mapa.txt");
+        FileStream fs = File.OpenRead(path + "/mapa.txt");
 
         StreamReader sr = new StreamReader(fs);
 

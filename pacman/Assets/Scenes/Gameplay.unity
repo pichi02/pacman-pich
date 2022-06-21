@@ -4587,6 +4587,7 @@ MonoBehaviour:
   pillPrefab: {fileID: 137380356435682702, guid: 7e0f5ae99181d334d823c6f5ea9d6960, type: 3}
   portalPrefab: {fileID: 5563159731247461870, guid: 74fc3d1898481704a999b6bc8fe6690d, type: 3}
   homeDoor: {fileID: 8934034974144972920, guid: 8e2dc1e31d21154488e158f55e17f4cf, type: 3}
+  mapAsset: {fileID: 4900000, guid: 8d3633feff78b4141a4c06f5d328b5cd, type: 3}
 --- !u!1001 &1076254825
 PrefabInstance:
   m_ObjectHideFlags: 0
