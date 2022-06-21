@@ -41,6 +41,11 @@ public class Movement : MonoBehaviour
         {
             SetDirection(nextDirection);
         }
+        if (gameObject.CompareTag("Player"))
+        {
+            Debug.DrawLine(transform.position, transform.position + Vector3.right);
+
+        }
     }
 
     private void FixedUpdate()
@@ -67,8 +72,16 @@ public class Movement : MonoBehaviour
 
     public bool Occupied(Vector2 direction)
     {
+        RaycastHit2D hit;
+        if (direction == Vector2.up || direction == Vector2.down)
+        {
+            hit = Physics2D.BoxCast(transform.position, Vector2.one * 0.46f, 0f, direction, 1.5f, obstacleLayer);
 
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, Vector2.one * 0.75f, 0f, direction, 1.5f, obstacleLayer);
+        }
+        else
+        {
+            hit = Physics2D.BoxCast(transform.position, new Vector2(0.3f, 0.92f), 0f, direction, 1.5f, obstacleLayer);
+        }
         return hit.collider != null;
     }
     public Vector2 GetDirection()
