@@ -5,6 +5,7 @@ using UnityEngine;
 public class Point : MonoBehaviour
 {
     private static int instantiatedPoints;
+
     private void Awake()
     {
         instantiatedPoints++;

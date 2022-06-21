@@ -6,9 +6,12 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private Text scoreText;
+    [SerializeField] private TMPro.TextMeshProUGUI scoreText;
 
     [SerializeField] private GameObject[] hearts;
+    [SerializeField] private AudioSource music;
+    [SerializeField] private AudioSource pickPointsSound;
+    [SerializeField] private AudioSource pickPillsSound;
     private Movement movement;
 
     public delegate void PillEaten();
@@ -75,6 +78,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Point"))
         {
+            pickPointsSound.Play();
             Point point = collision.gameObject.GetComponent<Point>();
             if (point.GetInstantiatedPoints() == 1)
             {
@@ -86,6 +90,7 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Pill"))
         {
+            pickPillsSound.Play();
             Pill pill = collision.gameObject.GetComponent<Pill>();
             if (pill.GetInstantiatedPills() == 1)
             {
@@ -116,6 +121,7 @@ public class Player : MonoBehaviour
         else if (lives == 0)
         {
             Destroy(hearts[0]);
+            music.Stop();
         }
     }
 
