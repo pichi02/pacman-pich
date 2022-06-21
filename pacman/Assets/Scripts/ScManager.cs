@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+public class ScManager : MonoBehaviour
 {
 
     public void LoadScene(string scene)
@@ -14,4 +14,5 @@ public class SceneLoader : MonoBehaviour
     {
         Application.Quit();
     }
+  
 }

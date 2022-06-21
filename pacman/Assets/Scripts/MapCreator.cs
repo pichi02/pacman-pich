@@ -36,7 +36,7 @@ public class MapCreator : MonoBehaviour
     public void CreateFileMap()
     {
         Directory.CreateDirectory(path);
-        File.WriteAllText(path, mapAsset.ToString());
+        File.WriteAllText(path + "/mapa.txt", mapAsset.ToString());
     }
 
     public void ReadFileMap()
