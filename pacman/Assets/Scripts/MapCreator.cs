@@ -66,22 +66,22 @@ public class MapCreator : MonoBehaviour
                 {
 
                     case 'X':
-                        v = new Vector2(j + 0.5f, i + 0.5f);
+                        v = new Vector2(j, i);
                         Instantiate(brickPrefab, v, Quaternion.identity);
                         tiles.Add(new Tile(TileType.WALL, v));
                         break;
                     case 'O':
-                        v = new Vector2(j + 0.5f, i + 0.5f);
+                        v = new Vector2(j, i);
                         Instantiate(pointPrefab, v, Quaternion.identity);
                         tiles.Add(new Tile(TileType.POINT, v));
                         break;
                     case '*':
-                        v = new Vector2(j + 0.5f, i + 0.5f);
+                        v = new Vector2(j, i);
                         Instantiate(pillPrefab, v, Quaternion.identity);
                         tiles.Add(new Tile(TileType.PILL, v));
                         break;
                     case '-':
-                        v = new Vector2(j + 0.5f, i + 0.5f);
+                        v = new Vector2(j, i);
                         Instantiate(homeDoor, v, Quaternion.identity);
                         tiles.Add(new Tile(TileType.GHOSTHOME, v));
                         break;
@@ -91,11 +91,11 @@ public class MapCreator : MonoBehaviour
             }
         }
     }
-    public static TileType GetTileTypeByPosition(int posX, int posY)
+    public static TileType GetTileTypeByPosition(float posX, float posY)
     {
         foreach (Tile tile in tiles)
         {
-            if (tile.pos.x == posX && tile.pos.y == posY)
+            if (tile.pos.x == Mathf.RoundToInt(posX) && tile.pos.y == Mathf.RoundToInt(posY))
             {
                 return tile.type;
             }

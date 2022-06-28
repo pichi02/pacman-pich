@@ -37,11 +37,17 @@ public class Player : MonoBehaviour
     float time;
     Vector2 position;
 
+    bool removeKey = false;
+
     private void Awake()
     {
         //movement = GetComponent<Movement>();
-        initialPosition = transform.position;
+        initialPosition = new Vector2(3f, 1f);
         Time.timeScale = 1;
+    }
+    private void Start()
+    {
+        position = transform.position;
     }
 
     void Update()
@@ -98,20 +104,22 @@ public class Player : MonoBehaviour
             switch (keys[0])
             {
                 case KeyCode.W:
-                    MoveLerp(transform.position, Vector3.up);
+                    MoveLerp(position, Vector3.up);
                     break;
                 case KeyCode.A:
-                    MoveLerp(transform.position, Vector3.left);
+                    MoveLerp(position, Vector3.left);
                     break;
                 case KeyCode.S:
-                    MoveLerp(transform.position, Vector3.down);
+                    MoveLerp(position, Vector3.down);
                     break;
                 case KeyCode.D:
-                    MoveLerp(transform.position, Vector3.right);
+                    MoveLerp(position, Vector3.right);
                     break;
                 default:
                     break;
             }
+
+
         }
 
         if (keys.Count == 2)
@@ -194,7 +202,14 @@ public class Player : MonoBehaviour
 
     public void ResetPacman()
     {
+        for (int i = 0; i < keys.Count; i++)
+        {
+            keys.Remove(keys[i]);
+        }
         transform.position = initialPosition;
+        time = 0;
+        canMove = false;
+        position = transform.position;
     }
     public void CheckGameOver()
     {
@@ -216,7 +231,7 @@ public class Player : MonoBehaviour
 
     private void MoveLerp(Vector3 initPos, Vector3 movingVector)
     {
-        if (MapCreator.GetTileTypeByPosition((int)(transform.position.x + movingVector.x), (int)(transform.position.y + movingVector.y)) != TileType.WALL && time == 0)
+        if (MapCreator.GetTileTypeByPosition(Mathf.RoundToInt((transform.position.x + movingVector.x)), Mathf.RoundToInt((transform.position.y + movingVector.y))) != TileType.WALL && time == 0)
         {
             canMove = true;
         }
@@ -224,7 +239,7 @@ public class Player : MonoBehaviour
         {
             if (time <= 1)
             {
-                transform.position = Vector3.Lerp(initPos, initPos + movingVector, time += Time.deltaTime );
+                transform.position = Vector3.Lerp(initPos, initPos + movingVector, time += Time.deltaTime * 5f);
                 if (time >= 1)
                 {
                     time = 1;
@@ -233,7 +248,7 @@ public class Player : MonoBehaviour
                         MakeChangeDirection();
                     }
                     position = transform.position;
-                    if (MapCreator.GetTileTypeByPosition((int)(transform.position.x + movingVector.x), (int)(transform.position.y + movingVector.y)) != TileType.WALL)
+                    if (MapCreator.GetTileTypeByPosition((transform.position.x + movingVector.x), (transform.position.y + movingVector.y)) != TileType.WALL)
                     {
                         time = 0;
                     }
@@ -266,25 +281,25 @@ public class Player : MonoBehaviour
             switch (keys[1])
             {
                 case KeyCode.W:
-                    if (MapCreator.GetTileTypeByPosition((int)(transform.position.x), (int)(transform.position.y + Vector3.up.y)) != TileType.WALL)
+                    if (MapCreator.GetTileTypeByPosition((transform.position.x), (transform.position.y + Vector3.up.y)) != TileType.WALL)
                     {
                         canChange = true;
                     }
                     break;
                 case KeyCode.S:
-                    if (MapCreator.GetTileTypeByPosition((int)(transform.position.x), (int)(transform.position.y - Vector3.up.y)) != TileType.WALL)
+                    if (MapCreator.GetTileTypeByPosition((transform.position.x), (transform.position.y - Vector3.up.y)) != TileType.WALL)
                     {
                         canChange = true;
                     }
                     break;
                 case KeyCode.D:
-                    if (MapCreator.GetTileTypeByPosition((int)(transform.position.x + Vector3.right.x), (int)(transform.position.y)) != TileType.WALL)
+                    if (MapCreator.GetTileTypeByPosition((transform.position.x + Vector3.right.x), (transform.position.y)) != TileType.WALL)
                     {
                         canChange = true;
                     }
                     break;
                 case KeyCode.A:
-                    if (MapCreator.GetTileTypeByPosition((int)(transform.position.x - Vector3.right.x), (int)(transform.position.y)) != TileType.WALL)
+                    if (MapCreator.GetTileTypeByPosition((transform.position.x - Vector3.right.x), (transform.position.y)) != TileType.WALL)
                     {
                         canChange = true;
                     }
@@ -297,6 +312,7 @@ public class Player : MonoBehaviour
             else
             {
                 canChange = false;
+                removeKey = true;
                 keys.Remove(keys[1]);
             }
         }
@@ -309,6 +325,16 @@ public class Player : MonoBehaviour
         keys.Remove(keys[1]);
         canMove = false;
         time = 0;
+    }
+
+    public void PortalColiision()
+    {
+        time = 0;
+        //for (int i = 0; i < keys.Count; i++)
+        //{
+        //    keys.Remove(keys[i]);
+        //}
+        position = transform.position;
     }
 
 }

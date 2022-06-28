@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player pacman;
     [SerializeField] private Panel gameOverPanel;
     [SerializeField] private Panel winPanel;
+    [SerializeField] private Portal portal1;
+    [SerializeField] private Portal portal2;
     void Start()
     {
         for (int i = 0; i < ghost.Length; i++)
@@ -20,6 +22,8 @@ public class GameManager : MonoBehaviour
         Ghost.OnPacmanKill += pacman.ResetPacman;
         pacman.OnGameOver += gameOverPanel.Activate;
         pacman.OnWin += winPanel.Activate;
+        portal1.OnPortalCollision += pacman.PortalColiision;
+        portal2.OnPortalCollision += pacman.PortalColiision;
     }
 
     // Update is called once per frame
@@ -39,5 +43,8 @@ public class GameManager : MonoBehaviour
         Ghost.OnPacmanKill -= pacman.ResetPacman;
         pacman.OnGameOver -= gameOverPanel.Activate;
         pacman.OnWin -= winPanel.Activate;
+        portal1.OnPortalCollision -= pacman.PortalColiision;
+        portal2.OnPortalCollision -= pacman.PortalColiision;
+
     }
 }
