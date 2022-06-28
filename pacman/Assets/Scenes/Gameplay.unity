@@ -5236,7 +5236,6 @@ GameObject:
   - component: {fileID: 1178110678}
   - component: {fileID: 1178110677}
   - component: {fileID: 1178110676}
-  - component: {fileID: 1178110680}
   - component: {fileID: 1178110675}
   - component: {fileID: 1178110681}
   - component: {fileID: 1178110682}
@@ -5350,32 +5349,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1178110674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.645, y: 1.452, z: 0}
+  m_LocalPosition: {x: 3.5, y: 1.5, z: 0}
   m_LocalScale: {x: 0.71622, y: 0.8284142, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1178110680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178110674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44a263c81f247ba41be8f4fcec1d1e3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 4
-  speedMultiplier: 1
-  initialDirection: {x: -0.5, y: 0}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  direction: {x: -0.5, y: 0}
 --- !u!95 &1178110681
 Animator:
   serializedVersion: 4
@@ -5408,8 +5388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74cc6b115bb830341bfae4129f0510a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &1178110683
-BoxCollider2D:
+--- !u!58 &1178110683
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5421,19 +5401,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.030642845, y: 0.038950384}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.4, y: 1.35}
-    newSize: {x: 2.4, y: 1.35}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.46994048, y: 0.9268104}
-  m_EdgeRadius: 0
+  m_Radius: 0.48
 --- !u!1001 &1197024228
 PrefabInstance:
   m_ObjectHideFlags: 0

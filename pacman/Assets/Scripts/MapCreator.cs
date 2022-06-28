@@ -20,6 +20,8 @@ public class MapCreator : MonoBehaviour
 
     string path;
 
+    static List<Tile> tiles = new List<Tile>();
+
     private string[] mapLines;
     private void Awake()
     {
@@ -66,24 +68,39 @@ public class MapCreator : MonoBehaviour
                     case 'X':
                         v = new Vector2(j + 0.5f, i + 0.5f);
                         Instantiate(brickPrefab, v, Quaternion.identity);
+                        tiles.Add(new Tile(TileType.WALL, v));
                         break;
                     case 'O':
                         v = new Vector2(j + 0.5f, i + 0.5f);
                         Instantiate(pointPrefab, v, Quaternion.identity);
+                        tiles.Add(new Tile(TileType.POINT, v));
                         break;
                     case '*':
                         v = new Vector2(j + 0.5f, i + 0.5f);
                         Instantiate(pillPrefab, v, Quaternion.identity);
+                        tiles.Add(new Tile(TileType.PILL, v));
                         break;
                     case '-':
                         v = new Vector2(j + 0.5f, i + 0.5f);
                         Instantiate(homeDoor, v, Quaternion.identity);
+                        tiles.Add(new Tile(TileType.GHOSTHOME, v));
                         break;
                     default:
                         break;
                 }
             }
         }
+    }
+    public static TileType GetTileTypeByPosition(int posX, int posY)
+    {
+        foreach (Tile tile in tiles)
+        {
+            if (tile.pos.x == posX && tile.pos.y == posY)
+            {
+                return tile.type;
+            }
+        }
+        return TileType.NULL;
     }
 }
 

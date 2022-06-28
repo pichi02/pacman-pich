@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource music;
     [SerializeField] private AudioSource pickPointsSound;
     [SerializeField] private AudioSource pickPillsSound;
-    private Movement movement;
+    //private Movement movement;
 
     public delegate void PillEaten();
     public event PillEaten OnPillEat;
@@ -31,9 +31,15 @@ public class Player : MonoBehaviour
     private bool allPointsCollected = false;
     private bool allPillsCollected = false;
 
+    bool changingDirection;
+    List<KeyCode> keys = new List<KeyCode>();
+    bool canMove;
+    float time;
+    Vector2 position;
+
     private void Awake()
     {
-        movement = GetComponent<Movement>();
+        //movement = GetComponent<Movement>();
         initialPosition = transform.position;
         Time.timeScale = 1;
     }
@@ -44,29 +50,90 @@ public class Player : MonoBehaviour
         UpdateScore();
         CheckGameOver();
         CheckWin();
+        CheckDirection();
 
     }
 
+    private void AddKey(KeyCode key)
+    {
+        if (keys.Count < 2)
+        {
+            if (keys.Count > 0)
+            {
+                if (keys[0] != key)
+                {
+                    keys.Add(key);
+                }
+            }
+            else
+            {
+                keys.Add(key);
+            }
+        }
+    }
 
+    private void CheckDirection()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            AddKey(KeyCode.W);
+        }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            AddKey(KeyCode.A);
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            AddKey(KeyCode.S);
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            AddKey(KeyCode.D);
+        }
+    }
     private void Move()
     {
+        if (keys.Count > 0)
+        {
+            switch (keys[0])
+            {
+                case KeyCode.W:
+                    MoveLerp(transform.position, Vector3.up);
+                    break;
+                case KeyCode.A:
+                    MoveLerp(transform.position, Vector3.left);
+                    break;
+                case KeyCode.S:
+                    MoveLerp(transform.position, Vector3.down);
+                    break;
+                case KeyCode.D:
+                    MoveLerp(transform.position, Vector3.right);
+                    break;
+                default:
+                    break;
+            }
+        }
 
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (keys.Count == 2)
         {
-            movement.SetDirection(Vector2.up);
+            changingDirection = true;
         }
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            movement.SetDirection(Vector2.down);
-        }
-        else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            movement.SetDirection(Vector2.left);
-        }
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            movement.SetDirection(Vector2.right);
-        }
+        //if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        //{
+        //    movement.SetDirection(Vector2.up);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        //{
+        //    movement.SetDirection(Vector2.down);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //    movement.SetDirection(Vector2.left);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    movement.SetDirection(Vector2.right);
+        //}
 
     }
     private void UpdateScore()
@@ -146,5 +213,102 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    private void MoveLerp(Vector3 initPos, Vector3 movingVector)
+    {
+        if (MapCreator.GetTileTypeByPosition((int)(transform.position.x + movingVector.x), (int)(transform.position.y + movingVector.y)) != TileType.WALL && time == 0)
+        {
+            canMove = true;
+        }
+        if (canMove)
+        {
+            if (time <= 1)
+            {
+                transform.position = Vector3.Lerp(initPos, initPos + movingVector, time += Time.deltaTime );
+                if (time >= 1)
+                {
+                    time = 1;
+                    if (changingDirection)
+                    {
+                        MakeChangeDirection();
+                    }
+                    position = transform.position;
+                    if (MapCreator.GetTileTypeByPosition((int)(transform.position.x + movingVector.x), (int)(transform.position.y + movingVector.y)) != TileType.WALL)
+                    {
+                        time = 0;
+                    }
+                    else
+                    {
+                        canMove = false;
+                    }
+                    time = 0;
+                }
+            }
+        }
+        else
+        {
+            time = 0;
+        }
+
+        if (changingDirection && time == 0)
+        {
+            MakeChangeDirection();
+        }
+
+    }
+    private void MakeChangeDirection()
+    {
+        if (keys.Count == 2)
+        {
+            bool canChange = false;
+            KeyCode lastKey = keys[0];
+
+            switch (keys[1])
+            {
+                case KeyCode.W:
+                    if (MapCreator.GetTileTypeByPosition((int)(transform.position.x), (int)(transform.position.y + Vector3.up.y)) != TileType.WALL)
+                    {
+                        canChange = true;
+                    }
+                    break;
+                case KeyCode.S:
+                    if (MapCreator.GetTileTypeByPosition((int)(transform.position.x), (int)(transform.position.y - Vector3.up.y)) != TileType.WALL)
+                    {
+                        canChange = true;
+                    }
+                    break;
+                case KeyCode.D:
+                    if (MapCreator.GetTileTypeByPosition((int)(transform.position.x + Vector3.right.x), (int)(transform.position.y)) != TileType.WALL)
+                    {
+                        canChange = true;
+                    }
+                    break;
+                case KeyCode.A:
+                    if (MapCreator.GetTileTypeByPosition((int)(transform.position.x - Vector3.right.x), (int)(transform.position.y)) != TileType.WALL)
+                    {
+                        canChange = true;
+                    }
+                    break;
+            }
+            if (canChange)
+            {
+                CheckChangeDirection();
+            }
+            else
+            {
+                canChange = false;
+                keys.Remove(keys[1]);
+            }
+        }
+    }
+
+    private void CheckChangeDirection()
+    {
+        changingDirection = false;
+        keys[0] = keys[1];
+        keys.Remove(keys[1]);
+        canMove = false;
+        time = 0;
+    }
 
 }
