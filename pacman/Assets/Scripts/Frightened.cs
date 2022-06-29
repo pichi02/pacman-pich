@@ -43,7 +43,7 @@ public class Frightened : GhostModes
 
     private void OnEnable()
     {
-        ghost.movement.speedMultiplier = 0.5f;
+        ghost.movement.ChangeSpeedMultiplier(1f);
         eaten = false;
         ghost.ChangeColor(Color.blue);
         ghost.chase.Disable();
@@ -52,7 +52,7 @@ public class Frightened : GhostModes
 
     private void OnDisable()
     {
-        ghost.movement.speedMultiplier = 1f;
+        ghost.movement.ChangeSpeedMultiplier(1f);
         eaten = false;
         ghost.ChangeColor(ghost.GetInitialColor());
     }

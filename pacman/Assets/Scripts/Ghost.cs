@@ -11,8 +11,6 @@ public class Ghost : MonoBehaviour
     public Frightened frightened { get; private set; }
     public GhostModes initialBehavior;
     public Transform target;
-    public int points = 200;
-    [SerializeField]
     private SpriteRenderer sr;
     private Color initialColor;
 
@@ -71,6 +69,7 @@ public class Ghost : MonoBehaviour
         {
             if (!frightened.enabled)
             {
+                ResetState();
                 OnPacmanKill?.Invoke();
             }
         }

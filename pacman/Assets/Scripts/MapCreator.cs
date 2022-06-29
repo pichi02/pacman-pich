@@ -83,7 +83,7 @@ public class MapCreator : MonoBehaviour
                     case '-':
                         v = new Vector2(j, i);
                         Instantiate(homeDoor, v, Quaternion.identity);
-                        tiles.Add(new Tile(TileType.GHOSTHOME, v));
+                        tiles.Add(new Tile(TileType.WALL, v));
                         break;
                     default:
                         break;

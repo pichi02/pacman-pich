@@ -4,12 +4,12 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float speed = 8f;
-    public float speedMultiplier = 1f;
+    private float speedMultiplier = 1f;
     [SerializeField] private Vector2 initialDirection;
     [SerializeField] private LayerMask obstacleLayer;
 
     private Rigidbody2D rigidbody;
-    public Vector2 direction;
+    private Vector2 direction;
     private Vector2 nextDirection;
     private Vector3 startingPosition;
 
@@ -92,5 +92,10 @@ public class Movement : MonoBehaviour
     {
         rigidbody.isKinematic = value;
     }
+    public void ChangeSpeedMultiplier(float speedMultiplier)
+    {
+        this.speedMultiplier = speedMultiplier;
+    }
+
 
 }

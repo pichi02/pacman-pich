@@ -20,7 +20,7 @@ public class Scatter : GhostModes
             int index = Random.Range(0, checkpoint.GetPossibleDirections().Count);
 
             
-            if (checkpoint.GetPossibleDirections()[index] == -ghost.movement.direction)
+            if (checkpoint.GetPossibleDirections()[index] == -ghost.movement.GetDirection())
             {
                 index++;
 

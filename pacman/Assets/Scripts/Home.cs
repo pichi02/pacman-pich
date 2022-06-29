@@ -25,8 +25,8 @@ public class Home : GhostModes
     {
         if (enabled && collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-            ghost.movement.SetDirection(-ghost.movement.direction);
-            
+            ghost.movement.SetDirection(-ghost.movement.GetDirection());
+
         }
 
     }
@@ -34,8 +34,8 @@ public class Home : GhostModes
     {
         if (enabled && collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-            ghost.movement.SetDirection(-ghost.movement.direction);
-          
+            ghost.movement.SetDirection(-ghost.movement.GetDirection());
+
         }
     }
 
@@ -70,7 +70,6 @@ public class Home : GhostModes
 
 
         ghost.movement.SetDirection(new Vector2(Random.value < 0.5f ? -1f : 1f, 0f), true);
-        //ghost.movement.ChangeKinematicRBValue(false);
         ghost.movement.enabled = true;
     }
     public Transform GetInside()
