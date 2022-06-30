@@ -104,16 +104,20 @@ public class Player : MonoBehaviour
             switch (keys[0])
             {
                 case KeyCode.W:
-                    MoveLerp(position, Vector3.up);
+                    MoveLerp(position, Vector2.up);
+                    RoundXPositionToInt();
                     break;
                 case KeyCode.A:
-                    MoveLerp(position, Vector3.left);
+                    MoveLerp(position, Vector2.left);
+                    RoundYPositionToInt();
                     break;
                 case KeyCode.S:
-                    MoveLerp(position, Vector3.down);
+                    MoveLerp(position, Vector2.down);
+                    RoundXPositionToInt();
                     break;
                 case KeyCode.D:
-                    MoveLerp(position, Vector3.right);
+                    MoveLerp(position, Vector2.right);
+                    RoundYPositionToInt();
                     break;
                 default:
                     break;
@@ -235,7 +239,7 @@ public class Player : MonoBehaviour
         {
             canMove = true;
         }
-    
+
         if (canMove)
         {
             if (time <= 1)
@@ -337,5 +341,13 @@ public class Player : MonoBehaviour
         //}
         position = transform.position;
     }
+    private void RoundXPositionToInt()
+    {
+        transform.position = new Vector2(Mathf.RoundToInt(transform.position.x), transform.position.y);
+    }
 
+    private void RoundYPositionToInt()
+    {
+        transform.position = new Vector2(transform.position.x, Mathf.RoundToInt(transform.position.y));
+    }
 }
