@@ -235,11 +235,12 @@ public class Player : MonoBehaviour
         {
             canMove = true;
         }
+    
         if (canMove)
         {
             if (time <= 1)
             {
-                transform.position = Vector3.Lerp(initPos, initPos + movingVector, time += Time.deltaTime * 5f);
+                transform.position = Vector3.Lerp(initPos, initPos + movingVector, time += Time.deltaTime * 4f);
                 if (time >= 1)
                 {
                     time = 1;

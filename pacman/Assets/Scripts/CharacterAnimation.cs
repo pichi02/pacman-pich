@@ -6,10 +6,12 @@ public class CharacterAnimation : MonoBehaviour
 {
     private Animator animator;
 
+    private Player player;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        player = GetComponent<Player>();
     }
     private void Update()
     {
